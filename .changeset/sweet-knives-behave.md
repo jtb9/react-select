@@ -1,0 +1,5 @@
+---
+'react-select': minor
+---
+
+testing
