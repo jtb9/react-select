@@ -749,6 +749,8 @@ export default class Select<
     const { isDisabled, menuIsOpen } = this.props;
     const { isFocused } = this.state;
 
+    let alreadyFocusedThisUpdate = false;
+
     if (
       // ensure focus is restored correctly when the control becomes enabled
       (isFocused && !isDisabled && prevProps.isDisabled) ||
@@ -756,6 +758,19 @@ export default class Select<
       (isFocused && menuIsOpen && !prevProps.menuIsOpen)
     ) {
       this.focusInput();
+      alreadyFocusedThisUpdate = false;
+    }
+
+    // anytime we update, past the first time that we'd normally need focus
+    // ensure the input is still focused
+    if (alreadyFocusedThisUpdate === false) {
+      if (isFocused && menuIsOpen) {
+        if (this.inputRef) {
+          if (this.inputRef.contains(document.activeElement) !== true) {
+            this.focusInput();
+          }
+        }
+      }
     }
 
     if (isFocused && isDisabled && !prevProps.isDisabled) {
