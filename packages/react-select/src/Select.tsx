@@ -767,6 +767,7 @@ export default class Select<
       if (isFocused && menuIsOpen) {
         if (this.inputRef) {
           if (this.inputRef.contains(document.activeElement) !== true) {
+            console.log('testing focus');
             this.focusInput();
           }
         }
